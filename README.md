@@ -87,12 +87,8 @@ flutter run
 
 # 📸 Screenshots
 
-*(Add screenshots here after uploading images)*
-
 ```
-/screenshots/home.png
-/screenshots/problems.png
-/screenshots/problem_details.png
+
 ```
 
 ---
