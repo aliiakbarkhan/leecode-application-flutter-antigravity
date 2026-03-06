@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CodePrep Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FFA116", // LeetCode-ish orange as requested by context hint in image
+                        "primary-dark": "#e59114",
+                        "background-light": "#F7F8FA",
+                        "background-dark": "#1A1A1A",
+                        "editor-bg": "#262626",
+                        "editor-bg-light": "#ffffff",
+                        "panel-dark": "#2C2C2C",
+                        "panel-light": "#FFFFFF",
+                        "accent-blue": "#0A84FF",
+                        "accent-green": "#30D158",
+                        "syntax-keyword": "#FF79C6",
+                        "syntax-func": "#8BE9FD",
+                        "syntax-string": "#F1FA8C",
+                        "syntax-comment": "#6272A4",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>.code-scroll::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .code-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .code-scroll::-webkit-scrollbar-thumb {
+            background: #4A4A4A;
+            border-radius: 2px;
+        }
+        .line-numbers {
+            user-select: none;
+        }.hl-k { color: #ff7b72; }.hl-f { color: #d2a8ff; }.hl-s { color: #a5d6ff; }.hl-c { color: #8b949e; font-style: italic; }.hl-n { color: #79c0ff; }.hl-t { color: #ffa657; }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans h-screen flex flex-col overflow-hidden antialiased">
+<header class="flex-none px-4 py-3 bg-panel-light dark:bg-panel-dark border-b border-gray-200 dark:border-gray-800 flex justify-between items-center z-20 shadow-sm">
+<div class="flex items-center space-x-3">
+<button class="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300">
+<span class="material-icons-round text-2xl">arrow_back</span>
+</button>
+<div>
+<h1 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-[10px]">Problem 42</h1>
+<h2 class="text-base font-bold leading-tight">Trapping Rain Water</h2>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
+<span class="material-icons-round text-xl">timer</span>
+</button>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
+<span class="material-icons-round text-xl">settings</span>
+</button>
+</div>
+</header>
+<div class="flex-none px-4 py-2 bg-background-light dark:bg-background-dark flex justify-between items-center border-b border-gray-200 dark:border-gray-800">
+<div class="relative group">
+<button class="flex items-center space-x-2 bg-white dark:bg-panel-dark border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 text-sm font-medium shadow-sm active:scale-95 transition-transform">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+<span>Python 3</span>
+<span class="material-icons-round text-base opacity-60">expand_more</span>
+</button>
+</div>
+<div class="flex space-x-3">
+<button class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors">
+<span class="material-icons-round text-xl">undo</span>
+</button>
+<button class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors">
+<span class="material-icons-round text-xl">redo</span>
+</button>
+<button class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors">
+<span class="material-icons-round text-xl">format_align_left</span>
+</button>
+</div>
+</div>
+<main class="flex-1 relative overflow-hidden flex flex-col">
+<div class="flex-1 bg-editor-bg overflow-auto code-scroll relative font-mono text-sm leading-6">
+<div class="flex min-h-full">
+<div class="flex-none w-10 py-4 text-right pr-3 text-gray-600 select-none bg-editor-bg border-r border-gray-700/50">
+<div class="text-xs">1</div>
+<div class="text-xs">2</div>
+<div class="text-xs">3</div>
+<div class="text-xs">4</div>
+<div class="text-xs">5</div>
+<div class="text-xs">6</div>
+<div class="text-xs">7</div>
+<div class="text-xs">8</div>
+<div class="text-xs">9</div>
+<div class="text-xs">10</div>
+<div class="text-xs">11</div>
+<div class="text-xs">12</div>
+<div class="text-xs">13</div>
+</div>
+<div class="flex-1 p-4 pt-4 text-gray-300 whitespace-pre font-medium">
+<span class="hl-k">class</span> <span class="hl-t">Solution</span>:
+    <span class="hl-k">def</span> <span class="hl-f">trap</span>(<span class="hl-t">self</span>, height: <span class="hl-t">List</span>[<span class="hl-t">int</span>]) -&gt; <span class="hl-t">int</span>:
+        <span class="hl-c"># Two pointer approach</span>
+<span class="hl-k">if not</span> height:
+            <span class="hl-k">return</span> <span class="hl-n">0</span>
+        l, r = <span class="hl-n">0</span>, <span class="hl-f">len</span>(height) - <span class="hl-n">1</span>
+        leftMax, rightMax = height[l], height[r]
+        res = <span class="hl-n">0</span>
+<span class="hl-k">while</span> l &lt; r:
+            <span class="hl-k">if</span> leftMax &lt; rightMax:
+                l += <span class="hl-n">1</span>
+                leftMax = <span class="hl-f">max</span>(leftMax, height[l])
+                res += leftMax - height[l]
+            <span class="hl-k">else</span>:
+                r -= <span class="hl-n">1</span>
+                rightMax = <span class="hl-f">max</span>(rightMax, height[r])
+                res += rightMax - height[r]
+        <span class="hl-k">return</span> res</div>
+</div>
+<div class="absolute top-48 left-24 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-10 w-48 overflow-hidden hidden">
+<div class="px-3 py-2 text-xs text-gray-400 border-b border-gray-700 flex justify-between">
+<span>Suggestions</span>
+<span class="bg-gray-700 px-1 rounded text-[10px]">Tab</span>
+</div>
+<ul>
+<li class="px-3 py-2 hover:bg-blue-600/20 cursor-pointer flex items-center justify-between text-gray-200 text-sm">
+<span>max(a, b)</span>
+<span class="text-xs text-gray-500">func</span>
+</li>
+<li class="px-3 py-2 bg-blue-600 text-white cursor-pointer flex items-center justify-between text-sm">
+<span>min(a, b)</span>
+<span class="text-xs text-blue-200">func</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="h-1.5 bg-gray-200 dark:bg-gray-800 cursor-row-resize flex items-center justify-center hover:bg-primary transition-colors">
+<div class="w-8 h-1 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+</div>
+<div class="bg-panel-light dark:bg-panel-dark flex flex-col h-1/3 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] z-10">
+<div class="flex items-center border-b border-gray-200 dark:border-gray-800 px-2 bg-gray-50 dark:bg-[#252525]">
+<button class="px-4 py-3 text-xs font-semibold text-primary border-b-2 border-primary">
+                    Test Cases
+                </button>
+<button class="px-4 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+                    Console Output
+                </button>
+<div class="flex-1"></div>
+<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-icons-round text-lg">open_in_full</span>
+</button>
+</div>
+<div class="flex-1 p-4 overflow-y-auto bg-panel-light dark:bg-panel-dark">
+<div class="space-y-4">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Case 1</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">Passed</span>
+</div>
+<div class="bg-gray-50 dark:bg-[#1E1E1E] rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+<div class="mb-2">
+<span class="text-xs text-gray-400 block mb-1">Input: height =</span>
+<code class="text-sm font-mono text-gray-800 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded">[0,1,0,2,1,0,1,3,2,1,2,1]</code>
+</div>
+<div>
+<span class="text-xs text-gray-400 block mb-1">Expected Output:</span>
+<code class="text-sm font-mono text-gray-800 dark:text-gray-300">6</code>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 bg-white dark:bg-[#252525] border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+<button class="text-gray-500 dark:text-gray-400 text-sm font-medium px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center">
+<span class="material-icons-round text-lg mr-1.5">bug_report</span> Debug
+                </button>
+<div class="flex space-x-3">
+<button class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center">
+<span class="material-icons-round text-lg mr-1.5">play_arrow</span> Run
+                    </button>
+<button class="bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-primary/30 active:scale-95 transition-all flex items-center">
+<span class="material-icons-round text-lg mr-1.5">cloud_upload</span> Submit
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-800 border-t border-gray-300 dark:border-gray-700 p-1 flex justify-center space-x-1 overflow-x-auto hidden">
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">TAB</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">{</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">}</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">(</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">)</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">:</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">=</button>
+<button class="w-8 h-8 rounded bg-white dark:bg-gray-600 text-gray-800 dark:text-gray-100 shadow-sm font-mono text-sm flex items-center justify-center">"</button>
+</div>
+
+</body></html>
